@@ -1,0 +1,114 @@
+﻿:root {
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --dark-gray: #495057;
+    --text-color: #212529;
+    --border-gray: #dee2e6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background: var(--light-gray);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border-gray);
+    transition: transform 0.2s ease;
+}
+
+    .container:hover {
+        transform: translateY(-2px);
+    }
+
+.text-block {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: var(--light-gray);
+    border-radius: 6px;
+    border-left: 4px solid var(--dark-gray);
+    position: relative;
+}
+
+.image-block {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 2rem auto;
+    display: block;
+    border: 3px solid var(--medium-gray);
+    transition: all 0.3s ease;
+}
+
+    .image-block:hover {
+        transform: scale(1.03);
+        border-color: var(--dark-gray);
+    }
+
+.contacts {
+    background: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-top: 2rem;
+    border: 1px solid var(--border-gray);
+}
+
+    .contacts p {
+        margin: 0.8rem 0;
+        padding: 0.8rem;
+        background: white;
+        border-radius: 4px;
+        border: 1px solid var(--border-gray);
+    }
+
+#edit-mode {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--dark-gray);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+    #edit-mode:hover {
+        background: #343a40;
+        transform: translateY(-1px);
+    }
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .image-block {
+        width: 150px;
+        height: 150px;
+    }
+
+    .text-block {
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+}
