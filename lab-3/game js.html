@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Крестики-Нолики</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background: #333;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #444;
+            border: none;
+            border-radius: 10px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .cell:hover {
+                background: #555;
+                transform: scale(1.05);
+            }
+
+            .cell.x {
+                color: #ff4757;
+            }
+
+            .cell.o {
+                color: #2ed573;
+            }
+
+        .status {
+            margin: 20px 0;
+            font-size: 24px;
+            text-align: center;
+            padding: 10px 20px;
+            background: #333;
+            border-radius: 8px;
+        }
+
+        .restart {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .restart:hover {
+                background: #2980b9;
+            }
+
+        .win {
+            animation: win-animation 1s ease infinite;
+        }
+
+        @keyframes win-animation {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="status" id="status">Ход игрока: X</div>
+    <div class="board" id="board">
+        <button class="cell" data-index="0"></button>
+        <button class="cell" data-index="1"></button>
+        <button class="cell" data-index="2"></button>
+        <button class="cell" data-index="3"></button>
+        <button class="cell" data-index="4"></button>
+        <button class="cell" data-index="5"></button>
+        <button class="cell" data-index="6"></button>
+        <button class="cell" data-index="7"></button>
+        <button class="cell" data-index="8"></button>
+    </div>
+    <button class="restart" onclick="startGame()">Новая игра</button>
+
+    <script>
+        let currentPlayer = 'X';
+        let gameActive = true;
+        const cells = Array(9).fill('');
+        const winCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Горизонтальные
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Вертикальные
+            [0, 4, 8], [2, 4, 6] // Диагональные
+        ];
+
+        function handleClick(e) {
+            const cell = e.target;
+            const index = cell.dataset.index;
+
+            if (!gameActive || cells[index]) return;
+
+            cells[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+            cell.classList.add(currentPlayer.toLowerCase());
+
+            if (checkWin()) {
+                document.getElementById('status').innerHTML = `Игрок ${currentPlayer} победил! 🎉`;
+                gameActive = false;
+                highlightWinCombination();
+                return;
+            }
+
+            if (cells.every(cell => cell)) {
+                document.getElementById('status').innerHTML = 'Ничья! 🤝';
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            document.getElementById('status').innerHTML = `Ход игрока: ${currentPlayer}`;
+        }
+
+        function checkWin() {
+            return winCombinations.some(combination => {
+                return combination.every(index => {
+                    return cells[index] === currentPlayer;
+                });
+            });
+        }
+
+        function highlightWinCombination() {
+            winCombinations.forEach(combination => {
+                if (combination.every(index => cells[index] === currentPlayer)) {
+                    combination.forEach(index => {
+                        document.querySelector(`[data-index="${index}"]`).classList.add('win');
+                    });
+                }
+            });
+        }
+
+        function startGame() {
+            currentPlayer = 'X';
+            gameActive = true;
+            cells.fill('');
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('x', 'o', 'win');
+            });
+            document.getElementById('status').innerHTML = `Ход игрока: ${currentPlayer}`;
+        }
+
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.addEventListener('click', handleClick);
+        });
+
+        startGame();
+    </script>
+</body>
+</html>
