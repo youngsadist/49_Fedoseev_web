@@ -57,7 +57,7 @@ function buildPage(blocks) {
 
 let savedBlocks = JSON.parse(localStorage.getItem('blocks')) || [
     new TextBlock("Привет, я CoolBoy"),
-    new ImageBlock("кот на аву.jpg", "Мой аватар"),
+    new ImageBlock("image/кот на аву.jpg", "Мой аватар"),
     new ContactBlock([{ name: "Email", value: "noCool@example.com" }])
 ];
 
