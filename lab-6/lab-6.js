@@ -10,6 +10,12 @@ async function fetchData(section) {
 
     document.getElementById('api-data').innerHTML = '<p>Загрузка данных...</p>';
 
+    // Если выбран казино, сразу вставляем ссылку без запроса
+    if (section === 'casino') {
+        document.getElementById('api-data').innerHTML = `<p><a href="${apiEndpoints[section]}" target="_blank">Перейти в казино</a></p>`;
+        return;
+    }
+
     try {
         let response = await fetch(apiEndpoints[section]);
         let data = await response.json();
