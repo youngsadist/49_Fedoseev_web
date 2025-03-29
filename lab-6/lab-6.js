@@ -3,7 +3,8 @@ async function fetchData(section) {
         home: 'https://api.example.com/home',
         about: 'https://api.example.com/about',
         services: 'https://api.example.com/services',
-        contact: 'https://api.example.com/contact'
+        contact: 'https://api.example.com/contact',
+        casino: 'https://site-mirror.pokerok.com.ru/registration'
     };
 
     document.getElementById('api-data').innerHTML = '<p>Загрузка данных...</p>';
